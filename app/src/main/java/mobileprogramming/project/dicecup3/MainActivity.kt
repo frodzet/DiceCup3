@@ -1,25 +1,20 @@
 package mobileprogramming.project.dicecup3
 
+import android.content.Intent
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Gravity
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import android.widget.*
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.allViews
-import androidx.core.view.setMargins
-import java.lang.StringBuilder
-import kotlin.random.Random
 
 class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     lateinit var rollButton: Button
     lateinit var numDicesSpinner: Spinner
     lateinit var diceGrid: GridLayout
-
-    private val latestDiceRolls: MutableList<Dice> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,13 +37,13 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private fun roll() {
         diceGrid.removeAllViews()
-        latestDiceRolls.clear()
+        DiceHistory.getLatestRolls().clear()
 
         for(i in 1..numDicesSpinner.selectedItem.toString().toInt()) {
             val dice: Dice = Dice(this)
             dice.roll()
             addDiceToGrid(dice)
-            latestDiceRolls.add(dice)
+            DiceHistory.getLatestRolls().add(dice)
         }
     }
 
@@ -59,13 +54,13 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     // Overrides
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         diceGrid.removeAllViews()
-        latestDiceRolls.clear()
+        DiceHistory.getLatestRolls().clear()
 
         for(i in 1..parent?.selectedItem.toString().toInt()) {
             val dice: Dice = Dice(this)
             dice.setImage(6)
             addDiceToGrid(dice)
-            latestDiceRolls.add(dice)
+            DiceHistory.getLatestRolls().add(dice)
         }
     }
 
@@ -85,10 +80,27 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             diceGrid.columnCount = 3
         }
 
-        for(v in latestDiceRolls)
+        for(dice in DiceHistory.getLatestRolls())
         {
-            v.getImage().layoutParams = v.getLayoutParams()
-            diceGrid.addView(v.getImage())
+            dice.getImage().layoutParams = dice.getLayoutParams()
+            diceGrid.addView(dice.getImage())
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.navigation_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle item selection
+        return when (item.itemId) {
+            R.id.menuItemHistory -> {
+                startActivity(Intent(this@MainActivity, HistoryActivity::class.java))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

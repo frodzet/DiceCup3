@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.view.setMargins
-import androidx.room.Entity
 import kotlin.random.Random
 
 class Dice(var context: Context) {
@@ -29,7 +28,7 @@ class Dice(var context: Context) {
         points = randomRoll
         setImage(randomRoll)
 
-        RollHistory.addDice(this)
+        DiceHistory.addDice(this)
 
         return randomRoll
     }

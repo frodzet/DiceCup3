@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">DiceCup3</string>
     <string name="roll">Roll</string>
+    <string name="history">History</string>
+    <string name="clear">Clear</string>
+    <string name="results">Results</string>
     <string-array name="numDicesArray">
         <item>1</item>
         <item>2</item>
