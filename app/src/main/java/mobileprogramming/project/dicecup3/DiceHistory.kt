@@ -1,9 +1,11 @@
 package mobileprogramming.project.dicecup3
 
+
 class DiceHistory {
     companion object {
         private val allDices: MutableList<Dice> = mutableListOf()
         private val latestDiceRolls: MutableList<Dice> = mutableListOf()
+        val allDicesList: MutableList<MutableList<Dice>> = mutableListOf()
 
         fun addDice(dice: Dice) {
             allDices.add(dice)

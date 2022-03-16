@@ -39,12 +39,18 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         diceGrid.removeAllViews()
         DiceHistory.getLatestRolls().clear()
 
+        val diceList: ArrayList<Dice> = arrayListOf()
         for(i in 1..numDicesSpinner.selectedItem.toString().toInt()) {
             val dice: Dice = Dice(this)
             dice.roll()
-            addDiceToGrid(dice)
+            DiceHistory.addDice(dice)
             DiceHistory.getLatestRolls().add(dice)
+            diceList.add(dice)
+
+            addDiceToGrid(dice)
         }
+
+        DiceHistory.allDicesList.add(diceList)
     }
 
     private fun addDiceToGrid(dice: Dice) {
@@ -59,8 +65,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         for(i in 1..parent?.selectedItem.toString().toInt()) {
             val dice: Dice = Dice(this)
             dice.setImage(6)
-            addDiceToGrid(dice)
             DiceHistory.getLatestRolls().add(dice)
+            addDiceToGrid(dice)
         }
     }
 
