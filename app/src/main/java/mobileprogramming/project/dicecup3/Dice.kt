@@ -30,7 +30,7 @@ class Dice(var context: Context) {
 
         rollResult = randomRoll
         setImage(randomRoll)
-        timeOfRoll = LocalDateTime.now().format(DateTimeFormatter.ofPattern("d/M/y H:m:ss"))
+        timeOfRoll = LocalDateTime.now().format(DateTimeFormatter.ofPattern("d/M H:m:ss"))
 
         return randomRoll
     }

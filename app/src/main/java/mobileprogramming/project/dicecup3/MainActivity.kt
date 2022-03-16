@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         DiceHistory.getLatestRolls().clear()
 
         val diceList: ArrayList<Dice> = arrayListOf()
+
         for(i in 1..numDicesSpinner.selectedItem.toString().toInt()) {
             val dice: Dice = Dice(this)
             dice.roll()
